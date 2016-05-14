@@ -37,6 +37,17 @@
             .reveal section img {
                 background:none; border:none; box-shadow:none;
             }
+            img[alt="minipic"] { 
+                max-height:  80px;
+                vertical-align: middle;
+            }
+            img[alt="titlepic"] { 
+                max-height: 150px;
+                vertical-align: top;
+            }
+            img[alt="maxpic"] { 
+                max-height: 500px;
+            }
         </style>
         <!-- Printing and PDF exports -->
         <script>
@@ -57,16 +68,101 @@
 
             <!-- Any section element inside of this container is displayed as a slide -->
             <div class="slides">
-                <section id="debut" >
-                                        <img src="images/logo-elastic.png" style="background:none; border:none; box-shadow:none;width:60%;" />
-                    <!--<h1>Core<span style="color:#f35b69">O</span><span style="color:#6d9eeb">S</span></h1>-->
-                    <h3>Consolidez vos journaux et vos métriques avec Elastic Beats</h3>
-                    <p><small><small>
+<section id="debut" >
+    <img src="images/logo-elastic.png" style="background:none; border:none; box-shadow:none;width:60%;" />
+    <!--<h1>Core<span style="color:#f35b69">O</span><span style="color:#6d9eeb">S</span></h1>-->
+    <h3>Consolidez vos journaux et vos métriques avec Elastic Beats</h3>
+    <p><small><small>
 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Présentation </span> de <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName"><a href="http://twitter.com/CattGr">@CattGr</a></span> est mise à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">licence Creative Commons Attribution 4.0 International</a></small></small>
-                    </p>
-                </section>
+    </p>
+</section>
 
 <!-- ########################################################################################## -->
+<!-- ########################################################################################## -->
+<section>
+    <section data-markdown id="elastic">
+    ![](images/logo-elastic.png)
+    </section>
+    <section data-markdown id="ecosystem">
+    ### Produits Elastic
+|Libre | Payant|
+|-------|-----------------|
+|![minipic](images/Elasticsearch-Logo-Color-H.png)|![minipic](images/Cloud-Logo-Color-H.png)|
+|![minipic](images/Logstash-Logos-Color-H.png)|![minipic](images/shield-triad.png)|
+|![minipic](images/Kibana-Logo-Color-H.png)|Watcher (alerte)|
+|![minipic](images/Beats-Logos-Color-H.png)|Marvel|
+    </section>
+    <section data-markdown id="ecosystem-stack">
+    ### Stack Elastic
+|  |
+|:------:|
+|![maxpic](images/ElasticStack.png)|
+    </section>
+    <section data-markdown id="ecosystem-elasticsearch">
+    ### ![titlepic](images/Elasticsearch-Logo-Color-H.png)
+    * Moteur de recherche pour la génération NoSQL
+    * Basé sur le standard Apache Lucene
+    * Masque la complexité Java/Lucene à l’aide de services standards HTTP / RESTful / JSON 
+    * Utilisable à partir de n’importe quel langage
+    * Ajoute la couche cloud manquante à Lucene
+    * C’est un moteur, pas une interface graphique !
+    </section>
+    <section data-markdown id="ecosystem-logstash">
+    ### ![titlepic](images/Logstash-Logos-Color-H.png)
+    * ETL : 49 sources différentes,  42 filtres, 25 codecs, 56 sorties (dont ElasticSearch)
+    * Logstash: l’arme secrète pour vaincre le coté obscur de vos logs ( Devoxx 2015 https://youtu.be/-zawsoOhz70 )
+    ![](images/logstash.png)
+    </section>
+    <section data-markdown id="ecosystem-kibana">
+    ### ![titlepic](images/Kibana-Logo-Color-H.png)
+    * Interface Web permettant de représenter sous forme de graphique les données présentes dans ElasticSearch
+    ![maxpic](images/kibana-screenshot.png)
+    </section>
+    <section data-markdown id="ecosystem-beats">
+    ### ![titlepic](images/Beats-Logos-Color-H.png)
+    * Ensemble d'agents écrit en Go permettant de collecter les données pour les envoyer vers ElasticSearch
+
+    </section>
+    <section data-markdown id="ecosystem-payants">
+    ### Shield
+    * Assure la sécurité d'accès à vos données ElasticSearch.
+
+    ### Watcher
+    * Watcher est le produit d'alerte et de notification pour ElasticSearch.
+
+    ### Marvel
+    * Surveille l'activité au sein de votre cluster, diagnostique les problèmes, et permet d'optimiser les performances.
+    </section>
+</section>
+<!-- ########################################################################################## -->
+<!-- ########################################################################################## -->
+<section>
+    <section data-markdown id="Beats">
+    ![maxpic](images/Beats-Logos-Color-H.png)
+
+    </section>
+    <section data-markdown id="Beats-overview">
+    ### ElasticBeats en quelques mots
+    * application légère
+    * Écrit en Golang ![minipic](images/golang.png)
+    * Installez comme agent sur vos serveurs
+    * Pas de dépendances d'exécution
+    * but unique
+    </section>
+    <section data-markdown id="Beats-modules">
+|Elastic|Communtauté|
+|-------|-----------|
+
+    </section>
+</section>
+<!-- ########################################################################################## -->
+<!-- ########################################################################################## -->
+<section>
+    <section data-markdown id="">
+    ## 
+
+    </section>
+</section>
 <!-- ########################################################################################## -->
 <!-- ########################################################################################## -->
 <section data-background="images/bg.png">
