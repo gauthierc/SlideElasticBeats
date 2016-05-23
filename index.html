@@ -23,6 +23,9 @@
             .reveal h3 {
                 text-transform: none;
             }
+            .reveal h4 {
+                text-transform: none;
+            }
             #shell {
                 color: #255a7c;
                 font-family: Monospace;
@@ -82,6 +85,7 @@
 <section>
     <section data-markdown id="elastic">
     ![](images/logo-elastic.png)
+### Petit rappel sur les solutions
     </section>
     <section data-markdown id="ecosystem">
     ### Produits Elastic
@@ -134,39 +138,227 @@
     * Surveille l'activité au sein de votre cluster, diagnostique les problèmes, et permet d'optimiser les performances.
     </section>
 </section>
+
 <!-- ########################################################################################## -->
 <!-- ########################################################################################## -->
+
 <section>
+
     <section data-markdown id="Beats">
     ![maxpic](images/Beats-Logos-Color-H.png)
 
     </section>
+
     <section data-markdown id="Beats-overview">
     ### ElasticBeats en quelques mots
-    * application légère
+    * Application légère
     * Écrit en Golang ![minipic](images/golang.png)
-    * Installez comme agent sur vos serveurs
+    * Installer comme agent sur vos serveurs
     * Pas de dépendances d'exécution
-    * but unique
+    * But unique
     </section>
+
     <section data-markdown id="Beats-modules">
-|Elastic|Communtauté|
-|-------|-----------|
+#### Filebeat
+*Collecte les logs dans les fichiers*
+
+#### Winlogbeat
+*Collecte les events logs Windows*
+
+#### Packetbeat
+*Collecte dans les paquets réseaux tcp/udp*
+
+#### Topbeat
+*Collecte les statistiques système (CPU, Disk, Mémoire par process, etc...)*
+
+#### Metricbeat
+*Collecte des métriques par interrogation périodique d'un service externe (not released)*
+    </section>
+
+</section>
+
+<!-- ########################################################################################## -->
+<!-- ########################################################################################## -->
+
+<section>
+    <section data-markdown id="Packetbeat" data-background="images/network-matrix.jpg">
+# Packetbeat
+
+    </section>
+    <section data-markdown id="Packetbeat-Use-cases">
+    ### Usages de l'analyse réseau
+- Sécurité
+ - IDS *(Intrusion Detection Systems)*
+- Troubleshooting d'un problème réseau
+- Troubleshooting applicatif
+- Analyses de perfomance
+
+    </section>
+    <section data-markdown id="Packetbeat-MiseEnPlace">
+    ### Analyse réseau avec les outils standards
+1. Connexion ssh sur l'ensemble des serveurs
+- Lancement des tcpdump
+- Rapatriement des fichiers de captures
+- *Merge* des traces
+- Analyse avec Wireshark
+    </section>
+    <section data-markdown id="Packetbeat-overview">
+### Packetbeat: Vue d'ensemble
+Il fait tout cela en temp réel directement sur les serveurs.
+1. Capture du trafic réseau
+- Analyse protocolaire
+- Correlation requête et réponse dans la transaction
+- Extraction des mesures
+- Envoi des data vers ElasticSearch
+    </section>
+    <section data-markdown id="Packetbeat-decode">
+### Packetbeat: Décodeurs disponibles
+|Décodeurs Elastic | Décodeurs Communautaire|
+|:-----------------|:-----------------------|
+|Http        |MongoDB |
+|Mysql       |ICMP |
+|PostgreSQL  |DNS  |
+|Redis       |AMQP |
+|Thrift-RPC  |NFS  |
+|Memcache    |Le votre ? (Ldap, DB2,...)|
+    </section>
+    <section data-markdown id="Packetbeat-config">
+### Packetbeat: Configuration
+```
+# Network interfaces where to sniff the data
+interfaces:
+device: any
+
+# Specify the type of your network data
+protocols:
+    dns:
+        ports: [53]
+    http:
+        ports: [80, 8080, 8081, 5000, 8002]
+    mysql:
+        ports: [3306]
+
+output:
+    elasticsearch:
+        hosts: [localhost:9200]
+...
+```
+    </section>
+</section>
+<!-- ########################################################################################## -->
+<!-- ########################################################################################## -->
+<section>
+    <section data-markdown id="Filebeat" data-background="images/logs.jpg">
+    # Filebeat
+    </section>
+
+    <section data-markdown id="Filebeat-overview">
+### Filebeat: Vue d'ensemble
+1. *Log forwarder* qui envoie vos lignes de log à ElasticSearch
+- Successeur de *Logstash Forwarder*
+- Il se souvient quelles sont les lignes envoyées pour ne pas en oublier.
+- Lecture des fichiers ligne par ligne.
+- Il n'analyse pas les lignes envoyées.
+    </section>
+    <section data-markdown id="Filebeat-parse">
+### Filebeat: Envoi via Logstash
+1. Filebeat envoi les lignes de logs non *parsées* (pas d'anayse grammatical)
+- Utilisation des filtres Grok, mutate, GeoIP pour parser les lignes
+- Logstash est capable d'envoyer les informations analyser vers ElasticSearch et en plus vers d'autres outils (syslog, graphite, ...)
+- Possibilité de chiffrement des communications, certificat serveur et client.
+    </section>
+    <section data-markdown id="Filebeat-parse2">
+### Filebeat: Pour le future ElasticSearch 5.0
+1. Le plugin ElasticSearch *Ingest node* sera capable de parser directement.
+- Filebeat sera capable de communiquer directement avec ElasticSearch.
+- La configuration sera plus simple.
+    </section>
+    <section data-markdown id="Filebeat-config">
+### Filebeat: Configuration
+```
+filebeat:
+  # List of prospectors to fetch data.
+  prospectors:
+    # Type of files: log or stdin
+    - input_type: log
+
+    # Files that should be crawled and fetched.
+    paths:
+    - “/var/log/apache2/*”
+
+    # File encoding: plain, utf-8, big5, gb18030, ...
+    encoding: plain
+```
+    </section>
+</section>
+<!-- ########################################################################################## -->
+<!-- ########################################################################################## -->
+<section>
+    <section data-markdown id="Topbeat" data-background="images/top.jpg">
+    # Topbeat
+
+    </section>
+    <section data-markdown id="TopbeatOverview">
+    ### Topbeat
+- Topbeat est un peu comme l'outil Unix top, mais au lieu d'afficher les statistiques système à l'écran il envoie periodiquemene les informations vers ElasticSearch.
+- Il fonctionne également sous Windows.
+    </section>
+    <section data-markdown id="TopbeatExport">
+### Topbeat : Données Exportées
+|Système |Processus|Disques|
+|:-------|:--------|:------|
+|Charge  | État    |Espace libre et occupé|
+|Total CPU utilisé|Nom |Disques disponibles|
+|CPU utilisé par core|Ligne de commande|Point de montage|
+|Swap, Mémoire utilisé|pid||
+||CPU utilisé||
+||Mémoire utilisé||
+    </section>
+
+    <section data-markdown id="Topbeat-config">
+### Topbeat: Configuration
+```
+topbeat:
+    # how often to send system statistics
+    period: 10
+
+    # specify the processes to monitor
+    procs: [".*"]
+
+    # Statistics to collect (all enabled by default)
+    stats:
+        system: true
+        process: true
+        filesystem: true
+```
+    </section>
+
+</section>
+<!-- ########################################################################################## -->
+<!-- ########################################################################################## -->
+<section>
+    <section data-markdown id="Communitybeat">
+## Communauté Beats
+De nombreux Beats communautaire existent, voici quelques-un d'entre eux :
+- dockerbeat : Lit les statistiques de conteneurs Docker et les indexe dans ElasticSearch.
+- execbeat : Exécute régulièrement des commandes shell et envoie la sortie standard vers Logstash ou ElasticSearch.
+- flowbeat : Recueille, analyse les flux sFlow.
+- mysqlbeat : Permet d'executer des requêtes mysql et d'envoyer ces informations vers ElasticSearch pour analyse.
+- nagioscheckbeat : Pour les contrôles Nagios et les données de performance.
 
     </section>
 </section>
 <!-- ########################################################################################## -->
 <!-- ########################################################################################## -->
 <section>
-    <section data-markdown id="">
-    ## 
-
+    <section data-markdown id="Demo">
+    # Démo
+    ![maxpic](images/Man-of-Steel.jpg)
     </section>
 </section>
 <!-- ########################################################################################## -->
-<!-- ########################################################################################## -->
 <section data-background="images/bg.png">
-    <section data-markdown id="question">
+    <section data-markdown id="Question">
     # Questions ?
 
     ### Merci
