@@ -114,7 +114,7 @@
     <section data-markdown id="ecosystem-logstash">
     ### ![titlepic](images/Logstash-Logos-Color-H.png)
     * ETL : 49 sources différentes,  42 filtres, 25 codecs, 56 sorties (dont ElasticSearch)
-    * Logstash: l’arme secrète pour vaincre le coté obscur de vos logs ( Devoxx 2015 https://youtu.be/-zawsoOhz70 )
+    * Logstash: l’arme secrète pour vaincre le côté obscur de vos logs ( Devoxx 2015 https://youtu.be/-zawsoOhz70 )
     ![](images/logstash.png)
     </section>
     <section data-markdown id="ecosystem-kibana">
@@ -124,7 +124,7 @@
     </section>
     <section data-markdown id="ecosystem-beats">
     ### ![titlepic](images/Beats-Logos-Color-H.png)
-    * Ensemble d'agents écrit en Go permettant de collecter les données pour les envoyer vers ElasticSearch
+    * Ensemble d'agents écrits en Go permettant de collecter les données pour les envoyer vers ElasticSearch
 
     </section>
     <section data-markdown id="ecosystem-payants">
@@ -153,7 +153,7 @@
     ### ElasticBeats en quelques mots
     * Application légère
     * Écrit en Golang ![minipic](images/golang.png)
-    * Installer comme agent sur vos serveurs
+    * Installé comme agent sur vos serveurs
     * Pas de dépendances d'exécution
     * But unique
     </section>
@@ -191,7 +191,7 @@
  - IDS *(Intrusion Detection Systems)*
 - Troubleshooting d'un problème réseau
 - Troubleshooting applicatif
-- Analyses de perfomance
+- Analyse de perfomance
 
     </section>
     <section data-markdown id="Packetbeat-MiseEnPlace">
@@ -209,7 +209,7 @@ Il fait tout cela en temp réel directement sur les serveurs.
 - Analyse protocolaire
 - Correlation requête et réponse dans la transaction
 - Extraction des mesures
-- Envoi des data vers ElasticSearch
+- Envoi des données vers ElasticSearch
     </section>
     <section data-markdown id="Packetbeat-decode">
 ### Packetbeat: Décodeurs disponibles
@@ -220,7 +220,7 @@ Il fait tout cela en temp réel directement sur les serveurs.
 |PostgreSQL  |DNS  |
 |Redis       |AMQP |
 |Thrift-RPC  |NFS  |
-|Memcache    |Le votre ? (Ldap, DB2,...)|
+|Memcache    |Le vôtre ? (Ldap, DB2,...)|
     </section>
     <section data-markdown id="Packetbeat-config">
 ### Packetbeat: Configuration
@@ -256,15 +256,15 @@ output:
 ### Filebeat: Vue d'ensemble
 1. *Log forwarder* qui envoie vos lignes de log à ElasticSearch
 - Successeur de *Logstash Forwarder*
-- Il se souvient quelles sont les lignes envoyées pour ne pas en oublier.
+- Il se souvient des lignes envoyées pour ne pas en oublier.
 - Lecture des fichiers ligne par ligne.
 - Il n'analyse pas les lignes envoyées.
     </section>
     <section data-markdown id="Filebeat-parse">
 ### Filebeat: Envoi via Logstash
-1. Filebeat envoi les lignes de logs non *parsées* (pas d'anayse grammatical)
+1. Filebeat envoi les lignes de logs non *parsées* (pas d'anayse grammaticale)
 - Utilisation des filtres Grok, mutate, GeoIP pour parser les lignes
-- Logstash est capable d'envoyer les informations analyser vers ElasticSearch et en plus vers d'autres outils (syslog, graphite, ...)
+- Logstash est capable d'envoyer les informations analysées vers ElasticSearch et en plus vers d'autres outils (syslog, graphite, ...)
 - Possibilité de chiffrement des communications, certificat serveur et client.
     </section>
     <section data-markdown id="Filebeat-parse2">
@@ -300,7 +300,7 @@ filebeat:
     </section>
     <section data-markdown id="TopbeatOverview">
     ### Topbeat
-- Topbeat est un peu comme l'outil Unix top, mais au lieu d'afficher les statistiques système à l'écran il envoie periodiquemene les informations vers ElasticSearch.
+- Topbeat est un peu comme l'outil Unix top, mais au lieu d'afficher les statistiques système à l'écran il envoie periodiquement les informations vers ElasticSearch.
 - Il fonctionne également sous Windows.
     </section>
     <section data-markdown id="TopbeatExport">
@@ -339,11 +339,11 @@ topbeat:
 <section>
     <section data-markdown id="Communitybeat">
 ## Communauté Beats
-De nombreux Beats communautaire existent, voici quelques-un d'entre eux :
+De nombreux Beats communautaire existent, en voici quelques uns :
 - dockerbeat : Lit les statistiques de conteneurs Docker et les indexe dans ElasticSearch.
 - execbeat : Exécute régulièrement des commandes shell et envoie la sortie standard vers Logstash ou ElasticSearch.
 - flowbeat : Recueille, analyse les flux sFlow.
-- mysqlbeat : Permet d'executer des requêtes mysql et d'envoyer ces informations vers ElasticSearch pour analyse.
+- mysqlbeat : Permet d'exécuter des requêtes mysql et d'envoyer ces informations vers ElasticSearch pour analyse.
 - nagioscheckbeat : Pour les contrôles Nagios et les données de performance.
 
     </section>
